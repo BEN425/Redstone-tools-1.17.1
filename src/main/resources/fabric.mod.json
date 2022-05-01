@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "redstone_tools",
+  "version": "${version}",
+  "name": "Redstone_tools",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/redstone_tools/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.benplayer.redstone_tools.client.Redstone_toolsClient"
+    ],
+    "main": [
+      "com.benplayer.redstone_tools.Redstone_tools"
+    ]
+  },
+  "mixins": [
+    "redstone_tools.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.3",
+    "fabric": "*",
+    "minecraft": "1.17.1"
+  }
+}
