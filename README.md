@@ -27,6 +27,11 @@ It also supports other colored blocks.
 It also supports the **shulker box**.
 * `/shulker [int]`
 
+#### Other commands
+* `/killitem`
+
+Remove all item entities.
+
 ## Tools
 * Lazy key
 
