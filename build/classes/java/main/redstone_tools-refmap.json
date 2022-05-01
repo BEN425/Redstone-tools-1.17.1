@@ -1,0 +1,44 @@
+{
+  "mappings": {
+    "com/benplayer/redstone_tools/mixin/FlySpeedMixin": {
+      "getFlySpeed": "Lnet/minecraft/class_1656;method_7252()F"
+    },
+    "com/benplayer/redstone_tools/mixin/PlaceRedstoneMixin": {
+      "onPlaced": "Lnet/minecraft/class_2248;method_9567(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V"
+    },
+    "com/benplayer/redstone_tools/mixin/NoClipMixin": {
+      "updatePose": "Lnet/minecraft/class_1657;method_7318()V",
+      "tick": "Lnet/minecraft/class_1657;method_5773()V",
+      "Lnet/minecraft/entity/player/PlayerEntity;updateWaterSubmersionState()Z": "Lnet/minecraft/class_1657;method_7295()Z"
+    },
+    "com/benplayer/redstone_tools/mixin/WalkSpeedMixin": {
+      "getMovementSpeed": "Lnet/minecraft/class_1657;method_6029()F"
+    },
+    "com/benplayer/redstone_tools/mixin/NoteblockMixin": {
+      "onUse": "Lnet/minecraft/class_2428;method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+      "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z": "Lnet/minecraft/class_1937;method_8652(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;I)Z"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "com/benplayer/redstone_tools/mixin/FlySpeedMixin": {
+        "getFlySpeed": "Lnet/minecraft/class_1656;method_7252()F"
+      },
+      "com/benplayer/redstone_tools/mixin/PlaceRedstoneMixin": {
+        "onPlaced": "Lnet/minecraft/class_2248;method_9567(Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_1309;Lnet/minecraft/class_1799;)V"
+      },
+      "com/benplayer/redstone_tools/mixin/NoClipMixin": {
+        "updatePose": "Lnet/minecraft/class_1657;method_7318()V",
+        "tick": "Lnet/minecraft/class_1657;method_5773()V",
+        "Lnet/minecraft/entity/player/PlayerEntity;updateWaterSubmersionState()Z": "Lnet/minecraft/class_1657;method_7295()Z"
+      },
+      "com/benplayer/redstone_tools/mixin/WalkSpeedMixin": {
+        "getMovementSpeed": "Lnet/minecraft/class_1657;method_6029()F"
+      },
+      "com/benplayer/redstone_tools/mixin/NoteblockMixin": {
+        "onUse": "Lnet/minecraft/class_2428;method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;",
+        "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z": "Lnet/minecraft/class_1937;method_8652(Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;I)Z"
+      }
+    }
+  }
+}
