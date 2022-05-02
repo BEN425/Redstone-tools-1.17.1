@@ -62,7 +62,7 @@ You can also set the **keybindings** so that you can access these abilities with
 * Add download links
 * Add more tools
 
-## Versions :
+## Versions
 Minecraft: 1.17.1
 
 Fabric API: 0.46.1+1.17
