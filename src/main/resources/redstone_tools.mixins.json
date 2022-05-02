@@ -7,8 +7,7 @@
     "FlySpeedMixin",
     "NoClipMixin",
     "PlaceRedstoneMixin",
-    "WalkSpeedMixin",
-    "NoteblockMixin"
+    "WalkSpeedMixin"
   ],
   "client": [
   ],
