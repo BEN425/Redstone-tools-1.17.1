@@ -30,7 +30,11 @@ It also supports the **shulker box**.
 #### Other commands
 * `/killitem`
 
-Remove all item entities.
+Removee all item entities.
+
+* `/slab`
+
+Gives you a slab.
 
 ## Tools
 * Lazy key
