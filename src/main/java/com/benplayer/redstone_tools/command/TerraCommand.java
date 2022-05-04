@@ -19,14 +19,14 @@ import net.minecraft.util.Hand;
 public class TerraCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralCommandNode<ServerCommandSource> terraNode = CommandManager
-                .literal("terra")
-                .requires(source -> source.hasPermissionLevel(4))
-                .build();
+            .literal("terra")
+            .requires(source -> source.hasPermissionLevel(4))
+            .build();
 
         CommandNode<ServerCommandSource> terraColorNode = CommandManager
-                .argument("color", StringArgumentType.string())
-                .executes(TerraCommand::execute)
-                .build();
+            .argument("color", StringArgumentType.string())
+            .executes(TerraCommand::execute)
+            .build();
 
         dispatcher.getRoot().addChild(terraNode);
         terraNode.addChild(terraColorNode);
@@ -40,11 +40,6 @@ public class TerraCommand {
             PlayerInventory inventory = player.getInventory();
             String color = context.getArgument("color", String.class);
             ItemStack terra = new ItemStack(getTerra(color));
-
-            if (!player.isCreative()) {
-                source.sendError(new TranslatableText("You need creative mode to use this command."));
-                return 0;
-            }
 
             // Remove redundant wools
             while (inventory.contains(terra))

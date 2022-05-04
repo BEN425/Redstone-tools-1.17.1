@@ -17,7 +17,7 @@ public class FlySpeedMixin {
     @Inject(method = "getFlySpeed", at = @At("HEAD"), cancellable = true)
     private void injected(CallbackInfoReturnable<Float> info) {
         if (Redstone_toolsClient.highSpeed) {
-            info.setReturnValue(0.4f);
+            info.setReturnValue(Redstone_toolsClient.flSpeed);
             info.cancel();
         }
     }

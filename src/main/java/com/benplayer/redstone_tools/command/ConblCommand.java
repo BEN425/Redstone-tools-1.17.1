@@ -19,14 +19,14 @@ import net.minecraft.util.Hand;
 public class ConblCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralCommandNode<ServerCommandSource> conblNode = CommandManager
-                .literal("conbl")
-                .requires(source -> source.hasPermissionLevel(4))
-                .build();
+            .literal("conbl")
+            .requires(source -> source.hasPermissionLevel(4))
+            .build();
 
         CommandNode<ServerCommandSource> conblColorNode = CommandManager
-                .argument("color", StringArgumentType.string())
-                .executes(ConblCommand::execute)
-                .build();
+            .argument("color", StringArgumentType.string())
+            .executes(ConblCommand::execute)
+            .build();
 
         dispatcher.getRoot().addChild(conblNode);
         conblNode.addChild(conblColorNode);
@@ -40,11 +40,6 @@ public class ConblCommand {
             PlayerInventory inventory = player.getInventory();
             String color = context.getArgument("color", String.class);
             ItemStack conbl = new ItemStack(getConbl(color));
-
-            if (!player.isCreative()) {
-                source.sendError(new TranslatableText("You need creative mode to use this command."));
-                return 0;
-            }
 
             // Remove redundant wools
             while (inventory.contains(conbl))

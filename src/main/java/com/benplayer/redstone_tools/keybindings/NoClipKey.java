@@ -25,7 +25,7 @@ public class NoClipKey {
 
     private static void execute(MinecraftClient client) {
         // Not creative mode or spectator mode
-        if (client.player == null || (!client.player.isCreative() && !client.player.isSpectator()))
+        if (client.player == null || !client.player.isCreative())
             return;
 
         if (toggleKey.isPressed()) {

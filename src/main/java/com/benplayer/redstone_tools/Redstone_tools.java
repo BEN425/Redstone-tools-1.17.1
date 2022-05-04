@@ -5,12 +5,15 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypeFilter;
 
 public class Redstone_tools implements ModInitializer {
     @Override
@@ -22,14 +25,28 @@ public class Redstone_tools implements ModInitializer {
 
             LiteralCommandNode<ServerCommandSource> killItemNode = CommandManager
                 .literal("killitem")
-                .requires(source -> source.hasPermissionLevel(4))
+                .requires(source -> source.hasPermissionLevel(2))
                 .executes(ctx -> {
                     int n = 0;
-                    for (Entity i:ctx.getSource().getWorld().iterateEntities())
-                        if (i.getClass() == ItemEntity.class) {
-                            i.kill();
+
+                    // Remove items
+                    var items = ctx.getSource().getWorld().getEntitiesByType(
+                        TypeFilter.instanceOf(ItemEntity.class), it -> true
+                    );
+                    for (Entity entity : items) {
+                            entity.kill();
                             n++;
                         }
+
+                    // Remove xp orbs
+                    var orbs = ctx.getSource().getWorld().getEntitiesByType(
+                        TypeFilter.instanceOf(ExperienceOrbEntity.class), it -> true
+                    );
+                    for (Entity entity : orbs) {
+                            entity.kill();
+                            n++;
+                        }
+
                     ctx.getSource().sendFeedback(Text.of(String.format("%d entities killed.", n)), false);
                     return n;
                 })
@@ -41,7 +58,7 @@ public class Redstone_tools implements ModInitializer {
                 .literal("slab")
                 .requires(source -> source.hasPermissionLevel(4))
                 .executes(ctx -> {
-                    ctx.getSource().getPlayer().giveItemStack(new ItemStack(Items.SMOOTH_STONE_SLAB));
+                    ctx.getSource().getPlayer().setStackInHand(Hand.MAIN_HAND, new ItemStack(Items.SMOOTH_STONE_SLAB));
                     return 1;
                 })
                 .build();
@@ -66,6 +83,10 @@ public class Redstone_tools implements ModInitializer {
             BarrelCommand.register(dispatcher);
             // usage: /shulker [int 0..15]
             ShulkerCommand.register(dispatcher);
+            // usage: /binCount [int 1..63] [bool] [int >0] [direction]
+            BinCountCommand.register(dispatcher);
+            // usage: /hexCount [int 1..16] [bool] [int >0] [direction]
+            hexCountCommand.register(dispatcher);
             // usage: /killitem
             // kills all item entities
             dispatcher.getRoot().addChild(killItemNode);

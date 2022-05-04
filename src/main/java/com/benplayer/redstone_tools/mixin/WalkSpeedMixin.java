@@ -19,7 +19,7 @@ public class WalkSpeedMixin {
     @Inject(method = "getMovementSpeed", at = @At("HEAD"), cancellable = true)
     private void injected(@NotNull CallbackInfoReturnable<Float> info) {
         if (Redstone_toolsClient.highSpeed) {
-            info.setReturnValue(0.6f);
+            info.setReturnValue(Redstone_toolsClient.flSpeed);
             info.cancel();
         }
     }

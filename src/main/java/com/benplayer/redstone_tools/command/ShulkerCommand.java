@@ -11,18 +11,19 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Hand;
 
 public class ShulkerCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralCommandNode<ServerCommandSource> shulkerNode = CommandManager
-                .literal("shulker")
-                .build();
+            .literal("shulker")
+            .requires(source -> source.hasPermissionLevel(4))
+            .build();
 
         CommandNode<ServerCommandSource> shuNode = CommandManager
-                .argument("signal", IntegerArgumentType.integer(0, 15))
-                .executes(ShulkerCommand::execute)
-                .build();
+            .argument("signal", IntegerArgumentType.integer(0, 15))
+            .executes(ShulkerCommand::execute)
+            .build();
 
         dispatcher.getRoot().addChild(shulkerNode);
         shulkerNode.addChild(shuNode);
@@ -34,11 +35,7 @@ public class ShulkerCommand {
         int signal = context.getArgument("signal", int.class);
 
         try {
-            if (!source.getPlayer().isCreative()) {
-                source.sendError(new TranslatableText("You need creative mode to use this command."));
-                return 0;
-            }
-            source.getPlayer().giveItemStack(ItemStack.fromNbt(getShulker(signal)));
+            source.getPlayer().setStackInHand(Hand.MAIN_HAND, ItemStack.fromNbt(getShulker(signal)));
         } catch (CommandSyntaxException e) {
             return 0;
         }

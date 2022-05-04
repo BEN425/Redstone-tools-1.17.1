@@ -11,18 +11,19 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Hand;
 
 public class BarrelCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralCommandNode<ServerCommandSource> barrelNode = CommandManager
-                .literal("bar")
-                .build();
+            .literal("bar")
+            .requires(source -> source.hasPermissionLevel(4))
+            .build();
 
         CommandNode<ServerCommandSource> barNode = CommandManager
-                .argument("signal", IntegerArgumentType.integer(0, 15))
-                .executes(BarrelCommand::execute)
-                .build();
+            .argument("signal", IntegerArgumentType.integer(0, 15))
+            .executes(BarrelCommand::execute)
+            .build();
 
         dispatcher.getRoot().addChild(barrelNode);
         barrelNode.addChild(barNode);
@@ -34,11 +35,7 @@ public class BarrelCommand {
         int signal = context.getArgument("signal", int.class);
 
         try {
-            if (!source.getPlayer().isCreative()) {
-                source.sendError(new TranslatableText("You need creative mode to use this command."));
-                return 0;
-            }
-            source.getPlayer().giveItemStack(ItemStack.fromNbt(getBarrel(signal)));
+            source.getPlayer().setStackInHand(Hand.MAIN_HAND, ItemStack.fromNbt(getBarrel(signal)));
         } catch (CommandSyntaxException e) {
             return 0;
         }

@@ -19,14 +19,14 @@ import net.minecraft.util.Hand;
 public class ConpowCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralCommandNode<ServerCommandSource> conpoNode = CommandManager
-                .literal("conpow")
-                .requires(source -> source.hasPermissionLevel(4))
-                .build();
+            .literal("conpow")
+            .requires(source -> source.hasPermissionLevel(4))
+            .build();
 
         CommandNode<ServerCommandSource> conpoColorNode = CommandManager
-                .argument("color", StringArgumentType.string())
-                .executes(ConpowCommand::execute)
-                .build();
+            .argument("color", StringArgumentType.string())
+            .executes(ConpowCommand::execute)
+            .build();
 
         dispatcher.getRoot().addChild(conpoNode);
         conpoNode.addChild(conpoColorNode);
@@ -40,11 +40,6 @@ public class ConpowCommand {
             PlayerInventory inventory = player.getInventory();
             String color = context.getArgument("color", String.class);
             ItemStack conpow = new ItemStack(getConpow(color));
-
-            if (!player.isCreative()) {
-                source.sendError(new TranslatableText("You need creative mode to use this command."));
-                return 0;
-            }
 
             // Remove redundant wools
             while (inventory.contains(conpow))

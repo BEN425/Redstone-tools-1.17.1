@@ -24,7 +24,7 @@ public class SpeedChangeKey {
     }
 
     private static void execute(MinecraftClient client) {
-        if (client.player == null || (!client.player.isCreative() && !client.player.isSpectator()))
+        if (client.player == null || !client.player.isCreative())
             return;
 
         if (toggleKey.isPressed()) {

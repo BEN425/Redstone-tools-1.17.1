@@ -11,18 +11,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.TranslatableText;
 import org.lwjgl.glfw.GLFW;
 
-public class NightVisionKey {
+public class InstantKillKey {
     private static KeyBinding toggleKey;
 
     public static void register() {
         toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.redstone_tools.night_vision_key",
+            "key.redstone_tools.instant_kill_key",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_UNKNOWN,
             "category.redstone_tools.keys"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(NightVisionKey::execute);
+        ClientTickEvents.END_CLIENT_TICK.register(InstantKillKey::execute);
     }
 
     private static void execute(MinecraftClient client) {
@@ -31,24 +31,23 @@ public class NightVisionKey {
 
         try {
             PlayerEntity player = client.getServer().getPlayerManager().getPlayer(client.player.getUuid());
-
-            if (player.hasStatusEffect(StatusEffects.NIGHT_VISION)) {
-                player.removeStatusEffect(StatusEffects.NIGHT_VISION);
+            if (player.hasStatusEffect(StatusEffects.STRENGTH)) {
+                player.removeStatusEffect(StatusEffects.STRENGTH);
                 player.sendMessage(new TranslatableText(
-                    "Disable night vision"
+                    "Disable instant kill"
                 ), false);
             } else {
                 player.addStatusEffect(new StatusEffectInstance(
-                    StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 1, false, false, false
+                    StatusEffects.STRENGTH, Integer.MAX_VALUE, Short.MAX_VALUE, false, false, false
                 ));
                 player.sendMessage(new TranslatableText(
-                    "Enable night vision"
+                    "Enable instant kill"
                 ), false);
             }
 
             toggleKey.setPressed(false);
         } catch (Exception e) {
-            System.out.println("Something wrong with nightVisionKey...");
+            System.out.println("Something wrong with instantKillKey...");
         }
     }
 }

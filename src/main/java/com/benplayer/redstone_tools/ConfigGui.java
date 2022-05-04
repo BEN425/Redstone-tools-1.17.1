@@ -2,25 +2,25 @@ package com.benplayer.redstone_tools;
 
 import com.benplayer.redstone_tools.client.Redstone_toolsClient;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.TooltipBuilder;
-import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WLabel;
-import io.github.cottonmc.cotton.gui.widget.WToggleButton;
+import io.github.cottonmc.cotton.gui.widget.*;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.Font;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Style;
+import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
 import net.minecraft.text.TranslatableText;
 
 // Config GUI
 
 public class ConfigGui extends LightweightGuiDescription {
     public ConfigGui() {
+        IntegratedServer server = MinecraftClient.getInstance().getServer();
+        if (server == null || MinecraftClient.getInstance().player == null) return;
+        PlayerEntity player = server.getPlayerManager().getPlayer(MinecraftClient.getInstance().player.getUuid());
+        if (player == null) return;
+
         // Tooltips
 
         TranslatableText noClipTooltip = new TranslatableText(
@@ -37,6 +37,9 @@ public class ConfigGui extends LightweightGuiDescription {
         );
         TranslatableText placeRedstoneTooltip2 = new TranslatableText(
             "gui.redstone_tools.place_redstone_tooltip2"
+        );
+        TranslatableText instantKillTooltip = new TranslatableText(
+            "gui.redstone_tools.instant_kill_tooltip"
         );
 
         // Root
@@ -91,9 +94,6 @@ public class ConfigGui extends LightweightGuiDescription {
 
         // Night Vision button
 
-        PlayerEntity player = MinecraftClient.getInstance().player;
-        boolean hasNightVision = player.hasStatusEffect(StatusEffects.NIGHT_VISION);
-
         WToggleButton nightVisionButton = new WToggleButton(new TranslatableText(
             "gui.redstone_tools.night_vision"
         )) {
@@ -103,13 +103,12 @@ public class ConfigGui extends LightweightGuiDescription {
             }
         };
 
-        nightVisionButton.setToggle(hasNightVision);
+        nightVisionButton.setToggle(player.hasStatusEffect(StatusEffects.NIGHT_VISION));
         nightVisionButton.setOnToggle(on -> {
-            if (on) {
+            if (on)
                 player.addStatusEffect(new StatusEffectInstance(
                     StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 1, false, false, false
                 ));
-            }
             else
                 player.removeStatusEffect(StatusEffects.NIGHT_VISION);
         });
@@ -135,6 +134,46 @@ public class ConfigGui extends LightweightGuiDescription {
 
         root.add(placeRedstoneButton, 0, 4, 4, 2);
 
+        // Set speed text
+
+        WTextField setSpeedText = new WTextField(Text.of(String.valueOf(Redstone_toolsClient.defFlySpeed)));
+        setSpeedText.setText(String.valueOf(Redstone_toolsClient.flSpeed));
+        setSpeedText.setChangedListener(str -> { // Change flying speed
+            try {
+                if (!Redstone_toolsClient.highSpeed) return;
+
+                float speed = Float.parseFloat(str);
+                if (speed > 0 && speed < 5)
+                    Redstone_toolsClient.flSpeed = speed;
+                else
+                    Redstone_toolsClient.flSpeed = Redstone_toolsClient.defFlySpeed;
+            } catch (Exception e) {
+                Redstone_toolsClient.flSpeed = Redstone_toolsClient.defFlySpeed;
+            }
+        });
+        root.add(setSpeedText, 6, 2, 4, 2);
+
+        // Instant kill
+        WToggleButton instantKill = new WToggleButton(new TranslatableText(
+            "gui.redstone_tools.instant_kill"
+        )) {
+            @Override
+            public void addTooltip(TooltipBuilder tooltip) {
+                tooltip.add(instantKillTooltip);
+            }
+        };
+
+        instantKill.setToggle(player.hasStatusEffect(StatusEffects.STRENGTH));
+        instantKill.setOnToggle(on -> {
+            if (on)
+                player.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.STRENGTH, Integer.MAX_VALUE, Short.MAX_VALUE, false, false, false
+                ));
+            else
+                player.removeStatusEffect(StatusEffects.STRENGTH);
+        });
+
+        root.add(instantKill, 0, 5, 4, 2);
 
         root.validate(this);
     }

@@ -19,14 +19,14 @@ import net.minecraft.util.Hand;
 public class GlassCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         LiteralCommandNode<ServerCommandSource> glassNode = CommandManager
-                .literal("glass")
-                .requires(source -> source.hasPermissionLevel(4))
-                .build();
+            .literal("glass")
+            .requires(source -> source.hasPermissionLevel(4))
+            .build();
 
         CommandNode<ServerCommandSource> glassColorNode = CommandManager
-                .argument("color", StringArgumentType.string())
-                .executes(GlassCommand::execute)
-                .build();
+            .argument("color", StringArgumentType.string())
+            .executes(GlassCommand::execute)
+            .build();
 
         dispatcher.getRoot().addChild(glassNode);
         glassNode.addChild(glassColorNode);
@@ -40,11 +40,6 @@ public class GlassCommand {
             PlayerInventory inventory = player.getInventory();
             String color = context.getArgument("color", String.class);
             ItemStack glass = new ItemStack(getGlass(color));
-
-            if (!player.isCreative()) {
-                source.sendError(new TranslatableText("You need creative mode to use this command."));
-                return 0;
-            }
 
             // Remove redundant wools
             while (inventory.contains(glass))

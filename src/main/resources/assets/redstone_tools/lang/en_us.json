@@ -5,6 +5,7 @@
   "key.redstone_tools.speed_change_key": "High Speed",
   "key.redstone_tools.night_vision_key": "Night Vision",
   "key.redstone_tools.place_redstone_key": "Automatically placing redstone dust",
+  "key.redstone_tools.instant_kill_key": "Instant kill",
   "category.redstone_tools.keys": "Redstone Tools",
 
   "gui.redstone_tools.config": "Configuration",
@@ -12,21 +13,24 @@
   "gui.redstone_tools.high_speed": "High Speed",
   "gui.redstone_tools.night_vision": "Night Vision",
   "gui.redstone_tools.place_redstone": "Place Redstone",
+  "gui.redstone_tools.instant_kill": "Instant Kill",
 
   "gui.redstone_tools.noclip_tooltip": "Make you clip through blocks like a spectator",
   "gui.redstone_tools.high_speed_tooltip": "Make you move much faster",
   "gui.redstone_tools.night_vision_tooltip": "Give you a night vision effect",
   "gui.redstone_tools.place_redstone_tooltip1": "When you place a block,",
   "gui.redstone_tools.place_redstone_tooltip2": "it will place a redstone dust on the block",
+  "gui.redstone_tools.instant_kill_tooltip": "Make you able to kill a mob in a hit",
 
   "Enable noclip": "Noclip ON",
   "Disable noclip": "Noclip OFF",
-  "Enable high speed": "High speed ON",
-  "Disable high speed": "High speed OFF",
-  "Enable night vision": "Night vision ON",
-  "Disable night vision": "Night vision OFF",
+  "Enable high speed": "High Speed ON",
+  "Disable high speed": "High Speed OFF",
+  "Enable night vision": "Night Vision ON",
+  "Disable night vision": "Night Vision OFF",
   "Enable placing redstone": "Placing Redstone ON",
   "Disable placing redstone": "Placing Redstone OFF",
-  "Command syntax error.": "Command syntax error.",
-  "You need creative mode to use this command.": "You need creative mode to use this command."
+  "Enable instant kill": "Instant Kill ON",
+  "Disable instant kill": "Instant Kill OFF",
+  "Command syntax error.": "Command syntax error."
 }
