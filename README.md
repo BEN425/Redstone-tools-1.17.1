@@ -14,12 +14,12 @@ It is available for Minecraft 1.17.1 Fabric.
 It also supports other colored blocks.
 * `/terra` for **terracotta**
 * `/glass` for **stained glass**
-* `glaterra` for glazed **terracotta**
+* `/glaterra` for glazed **terracotta**
 * `/conbl` for **concrete block**
 * `/conpow` for **concrete powder**
 
 #### Obtaining barrels
-* `bar [int]`
+* `/bar [int]`
   * Gives you a barrel of specified signal strength.
   * For example, `/bar 8` gives you a barrel which can produce the signal strength of 8.
   * `int` varies from 0 to 15.
@@ -27,10 +27,23 @@ It also supports other colored blocks.
 It also supports the **shulker box**.
 * `/shulker [int]`
 
+#### Redstone
+* `/binCount [bits] [signed] [distance] [direction]`
+ * Calculate a binary number represented by redstone lamps.
+ * `bits` [int] : The bits of the binary number. It can be at most 63.
+ * `signed` [boolean] : The number is signed or unsigned. Using 2's complement if it is signed.
+ * `distance` [int] : The distance between two redstone lamps.
+ * `direction` : The direction of redstone lamps. It can a name, such as down, north, east, d, n, e. It can also be an axis, such as -y, -z, +x.
+* `/hexCount [size] [signed] [distance] [direction]`
+ * It is similiar to `binCount`, but it calculates a hexxadecimal number.
+ * `size` is the digit of the number.
+
+**You have to execute these 2 commands above the MSB block, so they can work properly.**
+
 #### Other commands
 * `/killitem`
 
-Removee all item entities.
+Removee all item and xp orb entities.
 
 * `/slab`
 
@@ -53,14 +66,10 @@ Press **V**, a menu will show up.
 
 You can set some useful abilities for the creative mode.
 
-Such as **noclip**, **high speed**, **night vision** and **auto redstone placing**.
+Such as **noclip**, **high speed**, **night vision**, **instant kill** and **auto redstone placing**.
 
 You can also set the **keybindings** so that you can access these abilities without opening the menu everytime.
 
-## TODO
-* Add some screenshots
-* Add download links
-* Add more tools
 
 ## Versions
 Minecraft: 1.17.1
@@ -68,5 +77,3 @@ Minecraft: 1.17.1
 Fabric API: 0.46.1+1.17
 
 Fabric loader: 0.14.3
-
-Yarn mappings: 1.17.1+build0.65
