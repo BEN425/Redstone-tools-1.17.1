@@ -29,14 +29,14 @@ It also supports the **shulker box**.
 
 #### Redstone
 * `/binCount [bits] [signed] [distance] [direction]`
- * Calculate a binary number represented by redstone lamps.
- * `bits` [int] : The bits of the binary number. It can be at most 63.
- * `signed` [boolean] : The number is signed or unsigned. Using 2's complement if it is signed.
- * `distance` [int] : The distance between two redstone lamps.
- * `direction` : The direction of redstone lamps. It can a name, such as down, north, east, d, n, e. It can also be an axis, such as -y, -z, +x.
+  * Calculate a binary number represented by redstone lamps.
+  * `bits` [int] : The bits of the binary number. It can be at most 63.
+  * `signed` [boolean] : The number is signed or unsigned. Using 2's complement if it is signed.
+  * `distance` [int] : The distance between two redstone lamps.
+  * `direction` : The direction of redstone lamps. It can a name, such as down, north, east, d, n, e. It can also be an axis, such as -y, -z, +x.
 * `/hexCount [size] [signed] [distance] [direction]`
- * It is similiar to `binCount`, but it calculates a hexxadecimal number.
- * `size` is the digit of the number.
+  * It is similiar to `binCount`, but it calculates a hexxadecimal number.
+  * `size` is the digit of the number.
 
 **You have to execute these 2 commands above the MSB block, so they can work properly.**
 
