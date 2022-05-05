@@ -77,3 +77,9 @@ Minecraft: 1.17.1
 Fabric API: 0.46.1+1.17
 
 Fabric loader: 0.14.3
+
+## Download
+
+Go to the Curseforge page of this mod :
+
+https://www.curseforge.com/minecraft/mc-mods/bens-redstone-tools
