@@ -4,7 +4,7 @@ This is a small mod that adds some convenient tools for redstone builders.
 It is available for Minecraft 1.17.1 Fabric.
 
 ## Commands :
-#### Obtaining blocks
+#### Obtaining building blocks
 * `/wool [color]`
   * Gives you a wool of the specified color.
   * For example, `/wool red` gives you a red wool.
@@ -18,7 +18,7 @@ It also supports other colored blocks.
 * `/conbl` for **concrete block**
 * `/conpow` for **concrete powder**
 
-#### Obtaining barrels
+#### Obtaining signal blocks
 * `/bar [int]`
   * Gives you a barrel of specified signal strength.
   * For example, `/bar 8` gives you a barrel which can produce the signal strength of 8.
@@ -26,6 +26,10 @@ It also supports other colored blocks.
 
 It also supports the **shulker box**.
 * `/shulker [int]`
+
+* `/lectern`
+ * Gives you a **lectern** which contains a **book with 15 pages**.
+ * You can change the signal strength easily with the lectern.
 
 #### Redstone
 * `/binCount [bits] [signed] [distance] [direction]`
@@ -70,6 +74,12 @@ Such as **noclip**, **high speed**, **night vision**, **instant kill** and **aut
 
 You can also set the **keybindings** so that you can access these abilities without opening the menu everytime.
 
+## Ingame Hud
+Display some information on the screen. It can display coordinates, biomes, light level, hand held items and targetted blocks.
+
+It also display extra information of the hand held item, such as enchantments, attribute modifiers and custom potion effects.
+
+I might add more information to display in the future, such as redstone and mob information.
 
 ## Versions
 Minecraft: 1.17.1
