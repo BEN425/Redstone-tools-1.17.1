@@ -26,7 +26,8 @@ It also supports other colored blocks.
 
 It also supports the **shulker box**.
 * `/shulker [int]`
-
+ 
+We usually use lecterns and books to control the signal strength.
 * `/lectern`
  * Gives you a **lectern** which contains a **book with 15 pages**.
  * You can change the signal strength easily with the lectern.
