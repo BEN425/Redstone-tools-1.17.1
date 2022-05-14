@@ -6,13 +6,13 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Hand;
 
@@ -33,13 +33,12 @@ public class GlassCommand {
     }
 
     private static int execute(CommandContext<ServerCommandSource> context) {
-        ServerCommandSource source = context.getSource();
+        String color = context.getArgument("color", String.class);
+        ItemStack glass = new ItemStack(getGlass(color));
 
         try {
-            ServerPlayerEntity player = source.getPlayer().getServer().getPlayerManager().getPlayer(source.getPlayer().getEntityName());
+            PlayerEntity player = context.getSource().getPlayer();
             PlayerInventory inventory = player.getInventory();
-            String color = context.getArgument("color", String.class);
-            ItemStack glass = new ItemStack(getGlass(color));
 
             // Remove redundant wools
             while (inventory.contains(glass))
@@ -52,7 +51,7 @@ public class GlassCommand {
         } catch (CommandSyntaxException | IllegalArgumentException e) {
             context.getSource().sendError(new TranslatableText("Command syntax error."));
             return 0;
-        } catch (NullPointerException e) {return 0;}
+        }
     }
 
     // return the corresponding glass of color

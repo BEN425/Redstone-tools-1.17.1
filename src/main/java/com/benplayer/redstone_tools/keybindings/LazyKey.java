@@ -32,24 +32,21 @@ public class LazyKey {
     }
 
     private static void execute(MinecraftClient client) {
-        if (!lazyKeyBinding.isPressed() || client.player == null || !client.player.isCreative())
+        if (!lazyKeyBinding.isPressed() || client.getServer() == null || client.player == null || !client.player.isCreative())
             return;
 
-        try {
-            ServerPlayerEntity player = client.getServer().getPlayerManager().getPlayer(client.player.getUuid());
-            PlayerInventory inventory = player.getInventory();
+        ServerPlayerEntity player = client.getServer().getPlayerManager().getPlayer(client.player.getUuid());
+        if (player == null) return;
+        PlayerInventory inventory = player.getInventory();
 
-            if (player.isHolding(Items.REDSTONE)) {
-                setItem(player, Items.REPEATER, (inventory.selectedSlot+1) % 9);
-            } else if (player.isHolding(Items.REPEATER)) {
-                setItem(player, Items.COMPARATOR, (inventory.selectedSlot+1) % 9);
-            } else if (player.isHolding(Items.COMPARATOR)) {
-                setItem(player, Items.REDSTONE_TORCH, (inventory.selectedSlot+1) % 9);
-            } else if (!player.isHolding(Items.REDSTONE_TORCH)) {
-                setItem(player, Items.REDSTONE, inventory.selectedSlot);
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Something wrong with lazyKey...");
+        if (player.isHolding(Items.REDSTONE)) {
+            setItem(player, Items.REPEATER, (inventory.selectedSlot+1) % 9);
+        } else if (player.isHolding(Items.REPEATER)) {
+            setItem(player, Items.COMPARATOR, (inventory.selectedSlot+1) % 9);
+        } else if (player.isHolding(Items.COMPARATOR)) {
+            setItem(player, Items.REDSTONE_TORCH, (inventory.selectedSlot+1) % 9);
+        } else if (!player.isHolding(Items.REDSTONE_TORCH)) {
+            setItem(player, Items.REDSTONE, inventory.selectedSlot);
         }
     }
 

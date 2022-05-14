@@ -7,6 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
 public class NoClipKey {
@@ -31,7 +32,10 @@ public class NoClipKey {
         if (toggleKey.isPressed()) {
             Redstone_toolsClient.noClip = !Redstone_toolsClient.noClip;
             client.player.sendMessage(new TranslatableText(
-                Redstone_toolsClient.noClip ? "Enable noclip" : "Disable noclip"), false);
+                Redstone_toolsClient.noClip ? "Enable noclip" : "Disable noclip"
+            ).formatted(
+                Redstone_toolsClient.noClip ? Formatting.GREEN : Formatting.RED
+            ), false);
             toggleKey.setPressed(false);
         }
     }

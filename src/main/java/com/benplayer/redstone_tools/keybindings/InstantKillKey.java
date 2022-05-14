@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
 public class InstantKillKey {
@@ -26,28 +27,26 @@ public class InstantKillKey {
     }
 
     private static void execute(MinecraftClient client) {
-        if (!toggleKey.isPressed() || client.player == null || !client.player.isCreative())
+        if (!toggleKey.isPressed() || client.getServer() == null || client.player == null || !client.player.isCreative())
             return;
 
-        try {
-            PlayerEntity player = client.getServer().getPlayerManager().getPlayer(client.player.getUuid());
-            if (player.hasStatusEffect(StatusEffects.STRENGTH)) {
-                player.removeStatusEffect(StatusEffects.STRENGTH);
-                player.sendMessage(new TranslatableText(
-                    "Disable instant kill"
-                ), false);
-            } else {
-                player.addStatusEffect(new StatusEffectInstance(
-                    StatusEffects.STRENGTH, Integer.MAX_VALUE, Short.MAX_VALUE, false, false, false
-                ));
-                player.sendMessage(new TranslatableText(
-                    "Enable instant kill"
-                ), false);
-            }
+        PlayerEntity player = client.getServer().getPlayerManager().getPlayer(client.player.getUuid());
+        if (player == null) return;
 
-            toggleKey.setPressed(false);
-        } catch (Exception e) {
-            System.out.println("Something wrong with instantKillKey...");
+        if (player.hasStatusEffect(StatusEffects.STRENGTH)) {
+            player.removeStatusEffect(StatusEffects.STRENGTH);
+            player.sendMessage(new TranslatableText(
+                "Disable instant kill"
+            ).formatted(Formatting.RED), false);
+        } else {
+            player.addStatusEffect(new StatusEffectInstance(
+                StatusEffects.STRENGTH, Integer.MAX_VALUE, Short.MAX_VALUE, false, false, false
+            ));
+            player.sendMessage(new TranslatableText(
+                "Enable instant kill"
+            ).formatted(Formatting.GREEN), false);
         }
+
+        toggleKey.setPressed(false);
     }
 }

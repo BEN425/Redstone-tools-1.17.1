@@ -30,12 +30,10 @@ public class ShulkerCommand {
     }
 
     private static int execute(CommandContext<ServerCommandSource> context) {
-        ServerCommandSource source = context.getSource();
-
         int signal = context.getArgument("signal", int.class);
 
         try {
-            source.getPlayer().setStackInHand(Hand.MAIN_HAND, ItemStack.fromNbt(getShulker(signal)));
+            context.getSource().getPlayer().setStackInHand(Hand.MAIN_HAND, ItemStack.fromNbt(getShulker(signal)));
         } catch (CommandSyntaxException e) {
             return 0;
         }

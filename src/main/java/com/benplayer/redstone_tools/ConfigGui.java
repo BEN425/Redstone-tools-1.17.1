@@ -15,49 +15,48 @@ import net.minecraft.text.TranslatableText;
 // Config GUI
 
 public class ConfigGui extends LightweightGuiDescription {
+    // Tooltips
+    private final static TranslatableText noClipTooltip = new TranslatableText("gui.redstone_tools.noclip_tooltip");
+    private final static TranslatableText highSpeedTooltip = new TranslatableText("gui.redstone_tools.high_speed_tooltip");
+    private final static TranslatableText nightVisionTooltip = new TranslatableText("gui.redstone_tools.night_vision_tooltip");
+    private final static TranslatableText placeRedstoneTooltip1 = new TranslatableText("gui.redstone_tools.place_redstone_tooltip1");
+    private final static TranslatableText placeRedstoneTooltip2 = new TranslatableText("gui.redstone_tools.place_redstone_tooltip2");
+    private final static TranslatableText instantKillTooltip = new TranslatableText("gui.redstone_tools.instant_kill_tooltip");
+    private final static TranslatableText instantBreakTooltip = new TranslatableText("gui.redstone_tools.instant_break_tooltip");
+
     public ConfigGui() {
         IntegratedServer server = MinecraftClient.getInstance().getServer();
         if (server == null || MinecraftClient.getInstance().player == null) return;
         PlayerEntity player = server.getPlayerManager().getPlayer(MinecraftClient.getInstance().player.getUuid());
         if (player == null) return;
 
-        // Tooltips
-
-        TranslatableText noClipTooltip = new TranslatableText(
-            "gui.redstone_tools.noclip_tooltip"
-        );
-        TranslatableText highSpeedTooltip = new TranslatableText(
-            "gui.redstone_tools.high_speed_tooltip"
-        );
-        TranslatableText nightVisionTooltip = new TranslatableText(
-            "gui.redstone_tools.night_vision_tooltip"
-        );
-        TranslatableText placeRedstoneTooltip1 = new TranslatableText(
-            "gui.redstone_tools.place_redstone_tooltip1"
-        );
-        TranslatableText placeRedstoneTooltip2 = new TranslatableText(
-            "gui.redstone_tools.place_redstone_tooltip2"
-        );
-        TranslatableText instantKillTooltip = new TranslatableText(
-            "gui.redstone_tools.instant_kill_tooltip"
-        );
-
         // Root
-
         WGridPanel root = new WGridPanel();
         setRootPanel(root);
-        root.setSize(150, 50);
+        root.setSize(150, 45);
         root.setInsets(Insets.ROOT_PANEL);
 
         // Title label
-
         WLabel title = new WLabel(new TranslatableText(
             "gui.redstone_tools.config"
         ));
         root.add(title, 0, 0, 4, 2);
 
-        // No Clip button
+        // Buttons
+        addNoClipButton(root);
+        addHighSpeedButton(root);
+        addNightVisionButton(root, player);
+        addRedstoneButton(root);
+        addInstantKillButton(root, player);
+        addInstantBreakButton(root);
 
+        // Change speed text field
+        setSpeedText(root);
+
+        root.validate(this);
+    }
+
+    private void addNoClipButton(WGridPanel root) {
         WToggleButton noClipButton = new WToggleButton(new TranslatableText(
             "gui.redstone_tools.noclip"
         )) {
@@ -73,9 +72,9 @@ public class ConfigGui extends LightweightGuiDescription {
         );
 
         root.add(noClipButton, 0, 1, 4, 2);
+    }
 
-        // High Speed button
-
+    private void addHighSpeedButton(WGridPanel root) {
         WToggleButton highSpeedButton = new WToggleButton(new TranslatableText(
             "gui.redstone_tools.high_speed"
         )) {
@@ -91,9 +90,9 @@ public class ConfigGui extends LightweightGuiDescription {
         );
 
         root.add(highSpeedButton, 0, 2, 4, 2);
+    }
 
-        // Night Vision button
-
+    private void addNightVisionButton(WGridPanel root, PlayerEntity player) {
         WToggleButton nightVisionButton = new WToggleButton(new TranslatableText(
             "gui.redstone_tools.night_vision"
         )) {
@@ -114,9 +113,9 @@ public class ConfigGui extends LightweightGuiDescription {
         });
 
         root.add(nightVisionButton, 0, 3, 4, 2);
+    }
 
-        // Place redstone key
-
+    private void addRedstoneButton(WGridPanel root) {
         WToggleButton placeRedstoneButton = new WToggleButton(new TranslatableText(
             "gui.redstone_tools.place_redstone"
         )) {
@@ -133,26 +132,9 @@ public class ConfigGui extends LightweightGuiDescription {
         );
 
         root.add(placeRedstoneButton, 0, 4, 4, 2);
+    }
 
-        // Set speed text
-
-        WTextField setSpeedText = new WTextField(Text.of(String.valueOf(Redstone_toolsClient.defFlySpeed)));
-        setSpeedText.setText(String.valueOf(Redstone_toolsClient.flSpeed));
-        setSpeedText.setChangedListener(str -> { // Change flying speed
-            try {
-                if (!Redstone_toolsClient.highSpeed) return;
-
-                float speed = Float.parseFloat(str);
-                if (speed > 0 && speed < 5)
-                    Redstone_toolsClient.flSpeed = speed;
-                else
-                    Redstone_toolsClient.flSpeed = Redstone_toolsClient.defFlySpeed;
-            } catch (Exception e) {
-                Redstone_toolsClient.flSpeed = Redstone_toolsClient.defFlySpeed;
-            }
-        });
-        root.add(setSpeedText, 6, 2, 4, 2);
-
+    private void addInstantKillButton(WGridPanel root, PlayerEntity player) {
         // Instant kill
         WToggleButton instantKill = new WToggleButton(new TranslatableText(
             "gui.redstone_tools.instant_kill"
@@ -174,7 +156,43 @@ public class ConfigGui extends LightweightGuiDescription {
         });
 
         root.add(instantKill, 0, 5, 4, 2);
+    }
 
-        root.validate(this);
+    private void addInstantBreakButton(WGridPanel root) {
+        WToggleButton instantBreakButton = new WToggleButton(new TranslatableText(
+            "gui.redstone_tools.instant_break"
+        )) {
+            @Override
+            public void addTooltip(TooltipBuilder tooltip) {
+                tooltip.add(instantBreakTooltip);
+            }
+        };
+
+        instantBreakButton.setToggle(Redstone_toolsClient.instantBreak);
+        instantBreakButton.setOnToggle(on ->
+            Redstone_toolsClient.instantBreak = !Redstone_toolsClient.instantBreak
+        );
+
+        root.add(instantBreakButton, 0, 6, 4, 2);
+    }
+
+    private void setSpeedText(WGridPanel root) {
+        WTextField setSpeedText = new WTextField(Text.of(String.valueOf(Redstone_toolsClient.defFlySpeed)));
+        setSpeedText.setText(String.valueOf(Redstone_toolsClient.flSpeed));
+        setSpeedText.setChangedListener(str -> { // Change flying speed
+            try {
+                if (!Redstone_toolsClient.highSpeed) return;
+
+                float speed = Float.parseFloat(str);
+                if (speed > 0 && speed < 5)
+                    Redstone_toolsClient.flSpeed = speed;
+                else
+                    Redstone_toolsClient.flSpeed = Redstone_toolsClient.defFlySpeed;
+            } catch (Exception e) {
+                Redstone_toolsClient.flSpeed = Redstone_toolsClient.defFlySpeed;
+            }
+        });
+
+        root.add(setSpeedText, 6, 2, 4, 2);
     }
 }

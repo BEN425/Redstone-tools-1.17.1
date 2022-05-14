@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
 public class NightVisionKey {
@@ -26,29 +27,26 @@ public class NightVisionKey {
     }
 
     private static void execute(MinecraftClient client) {
-        if (!toggleKey.isPressed() || client.player == null || !client.player.isCreative())
+        if (!toggleKey.isPressed() || client.getServer() == null || client.player == null || !client.player.isCreative())
             return;
 
-        try {
-            PlayerEntity player = client.getServer().getPlayerManager().getPlayer(client.player.getUuid());
+        PlayerEntity player = client.getServer().getPlayerManager().getPlayer(client.player.getUuid());
+        if (player == null) return;
 
-            if (player.hasStatusEffect(StatusEffects.NIGHT_VISION)) {
-                player.removeStatusEffect(StatusEffects.NIGHT_VISION);
-                player.sendMessage(new TranslatableText(
-                    "Disable night vision"
-                ), false);
-            } else {
-                player.addStatusEffect(new StatusEffectInstance(
-                    StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 1, false, false, false
-                ));
-                player.sendMessage(new TranslatableText(
-                    "Enable night vision"
-                ), false);
-            }
-
-            toggleKey.setPressed(false);
-        } catch (Exception e) {
-            System.out.println("Something wrong with nightVisionKey...");
+        if (player.hasStatusEffect(StatusEffects.NIGHT_VISION)) {
+            player.removeStatusEffect(StatusEffects.NIGHT_VISION);
+            player.sendMessage(new TranslatableText(
+                "Disable night vision"
+            ).formatted(Formatting.RED), false);
+        } else {
+            player.addStatusEffect(new StatusEffectInstance(
+                StatusEffects.NIGHT_VISION, Integer.MAX_VALUE, 1, false, false, false
+            ));
+            player.sendMessage(new TranslatableText(
+                "Enable night vision"
+            ).formatted(Formatting.GREEN), false);
         }
+
+        toggleKey.setPressed(false);
     }
 }

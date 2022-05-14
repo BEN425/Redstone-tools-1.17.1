@@ -83,6 +83,9 @@ public class Redstone_tools implements ModInitializer {
             BarrelCommand.register(dispatcher);
             // usage: /shulker [int 0..15]
             ShulkerCommand.register(dispatcher);
+            // give the player a lectern with a 15-pages book
+            // usage: /lectern
+            LecternCommand.register(dispatcher);
             // usage: /binCount [int 1..63] [bool] [int >0] [direction]
             BinCountCommand.register(dispatcher);
             // usage: /hexCount [int 1..16] [bool] [int >0] [direction]

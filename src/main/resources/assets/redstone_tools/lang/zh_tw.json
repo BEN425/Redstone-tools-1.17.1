@@ -1,11 +1,13 @@
 {
   "key.redstone_tools.lazy_key": "懶人鍵",
   "keys.redstone_tools.config_key": "設定鍵",
-  "key.redstone_tools.noclip_key": "穿牆鍵",
-  "key.redstone_tools.speed_change_key": "快速移動鍵",
-  "key.redstone_tools.night_vision_key": "夜視鍵",
+  "key.redstone_tools.noclip_key": "穿牆",
+  "key.redstone_tools.speed_change_key": "快速移動",
+  "key.redstone_tools.night_vision_key": "夜視",
   "key.redstone_tools.place_redstone_key": "自動放置紅石粉",
-  "key.redstone_tools.instant_kill_key": "立即傷害鍵",
+  "key.redstone_tools.instant_kill_key": "立即傷害",
+  "keys.redstone_tools.instant_break_key" : "瞬間破壞",
+  "keys.redstone_tools.ingamehud_key": "資訊介面",
   "category.redstone_tools.keys": "紅石工具",
 
   "gui.redstone_tools.config": "設定",
@@ -14,13 +16,15 @@
   "gui.redstone_tools.night_vision": "夜視",
   "gui.redstone_tools.place_redstone": "自動放置紅石",
   "gui.redstone_tools.instant_kill": "立即傷害",
+  "gui.redstone_tools.instant_break": "瞬間破壞",
 
   "gui.redstone_tools.noclip_tooltip": "可以像旁觀者一樣穿牆",
   "gui.redstone_tools.high_speed_tooltip": "可以高速移動",
   "gui.redstone_tools.night_vision_tooltip": "給予夜視效果",
   "gui.redstone_tools.place_redstone_tooltip1": "放置方塊時，",
   "gui.redstone_tools.place_redstone_tooltip2": "自動在上面放置紅石粉",
-  "gui.redstone_tools.instant_kill_tooltip": "讓你可以一擊殺死任何生物",
+  "gui.redstone_tools.instant_kill_tooltip": "可以一擊殺死任何生物",
+  "gui.redstone_tools.instant_break_tooltip": "可以無延遲破壞方塊",
 
   "Enable noclip": "啟用穿牆",
   "Disable noclip": "停用穿牆",
@@ -31,6 +35,8 @@
   "Enable placing redstone": "啟用自動放置紅石",
   "Disable placing redstone": "停用自動放置紅石",
   "Enable instant kill": "啟用立即傷害",
-  "Disable instant kill": "關閉立即傷害",
+  "Disable instant kill": "停用立即傷害",
+  "Enable instant break": "啟用瞬間破壞",
+  "Disable instant break": "停用瞬間破壞",
   "Command syntax error.": "指令語法錯誤"
 }

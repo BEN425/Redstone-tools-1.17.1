@@ -10,29 +10,29 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
-public class PlaceRedstoneKey {
+public class InstantBreakKey {
     private static KeyBinding toggleKey;
 
-    public static void regsiter() {
+    public static void register() {
         toggleKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-            "key.redstone_tools.place_redstone_key",
+            "keys.redstone_tools.instant_break_key",
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_UNKNOWN,
             "category.redstone_tools.keys"
         ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(PlaceRedstoneKey::execute);
+        ClientTickEvents.END_CLIENT_TICK.register(InstantBreakKey::execute);
     }
 
     private static void execute(MinecraftClient client) {
         if (!toggleKey.isPressed() || client.player == null || !client.player.isCreative())
             return;
 
-        Redstone_toolsClient.placeRedstone = !Redstone_toolsClient.placeRedstone;
+        Redstone_toolsClient.instantBreak = !Redstone_toolsClient.instantBreak;
         client.player.sendMessage(new TranslatableText(
-            Redstone_toolsClient.placeRedstone ? "Enable placing redstone" : "Disable placing redstone"
+            Redstone_toolsClient.instantBreak ? "Enable instant break" : "Disable instant break"
         ).formatted(
-            Redstone_toolsClient.placeRedstone ? Formatting.GREEN : Formatting.RED
+            Redstone_toolsClient.instantBreak ? Formatting.GREEN : Formatting.RED
         ), false);
 
         toggleKey.setPressed(false);

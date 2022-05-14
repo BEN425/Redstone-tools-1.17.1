@@ -11,10 +11,11 @@ public class Redstone_toolsClient implements ClientModInitializer {
     public static final float defFlySpeed = 0.4f;
 
     public static boolean noClip = false;
-    public static boolean breakDelay = true;
+    public static boolean instantBreak = false;
     public static boolean highSpeed = false;
     public static float flSpeed = defFlySpeed;
     public static boolean placeRedstone = false;
+    public static boolean inGameHud = true;
 
     @Override
     public void onInitializeClient() {
@@ -27,6 +28,7 @@ public class Redstone_toolsClient implements ClientModInitializer {
         NightVisionKey.register();
         PlaceRedstoneKey.regsiter();
         InstantKillKey.register();
-
+        InstantBreakKey.register();
+        InGameHudKey.register();
     }
 }

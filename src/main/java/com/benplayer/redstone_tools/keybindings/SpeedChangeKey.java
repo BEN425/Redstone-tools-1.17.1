@@ -7,6 +7,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 
 public class SpeedChangeKey {
@@ -32,6 +33,8 @@ public class SpeedChangeKey {
 
             client.player.sendMessage(new TranslatableText(
                 Redstone_toolsClient.highSpeed ? "Enable high speed" : "Disable high speed"
+            ).formatted(
+                Redstone_toolsClient.highSpeed ? Formatting.GREEN : Formatting.RED
             ), false);
 
             toggleKey.setPressed(false);

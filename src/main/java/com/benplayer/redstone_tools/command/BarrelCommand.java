@@ -8,6 +8,7 @@ import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
@@ -30,12 +31,10 @@ public class BarrelCommand {
     }
 
     private static int execute(CommandContext<ServerCommandSource> context) {
-        ServerCommandSource source = context.getSource();
-
         int signal = context.getArgument("signal", int.class);
 
         try {
-            source.getPlayer().setStackInHand(Hand.MAIN_HAND, ItemStack.fromNbt(getBarrel(signal)));
+            context.getSource().getPlayer().setStackInHand(Hand.MAIN_HAND, ItemStack.fromNbt(getBarrel(signal)));
         } catch (CommandSyntaxException e) {
             return 0;
         }
@@ -48,10 +47,8 @@ public class BarrelCommand {
         NbtCompound barrelNbt = new NbtCompound();
         NbtCompound itemNbt = new NbtCompound();
         NbtList itemListNbt = new NbtList();
-        NbtCompound blockEntityNbt = new NbtCompound();
         NbtCompound enchantNbt = new NbtCompound();
-        NbtList enchantListNbt = new NbtList();
-        NbtCompound tag = new NbtCompound();
+        NbtCompound tag;
 
         // The number of items to put in barrel
         int items = (signal <= 1) ? signal :
@@ -65,20 +62,26 @@ public class BarrelCommand {
             itemListNbt.add(temp);
         }
 
-        blockEntityNbt.putString("CustomName", String.format("%d", signal));
-        blockEntityNbt.put("Items", itemListNbt);
-
-        enchantNbt.putString("id", "minecraft:efficiency");
-        enchantNbt.putShort("lvl", (short) signal);
-        enchantListNbt.add(enchantNbt);
-
-        tag.put("BlockEntityTag", blockEntityNbt);
-        tag.put("Enchantments", enchantListNbt);
-        tag.putInt("HideFlags", 1);
-
         barrelNbt.putString("id", "minecraft:barrel");
         barrelNbt.putByte("Count", (byte) 1);
-        barrelNbt.put("tag", tag);
+        barrelNbt.put("tag", new NbtCompound());
+
+        tag = barrelNbt.getCompound("tag");
+
+        // Add enchantment effect
+        tag.put("Enchantments", new NbtList());
+        enchantNbt.putString("id", "minecraft:efficiency");
+        enchantNbt.putShort("lvl", (short) signal);
+        tag.getList("Enchantments", NbtElement.COMPOUND_TYPE).add(enchantNbt);
+        // BlockEntity tag
+        tag.put("BlockEntityTag", new NbtCompound());
+        tag.getCompound("BlockEntityTag").putString("CustomName", String.format("%d", signal));
+        tag.getCompound("BlockEntityTag").put("Items", itemListNbt);
+        // Custom name
+        tag.put("display", new NbtCompound());
+        tag.getCompound("display").putString("Name", String.valueOf(signal));
+
+        tag.putInt("HideFlags", 1);
 
         return barrelNbt;
     }
